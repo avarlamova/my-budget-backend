@@ -1,17 +1,13 @@
-const fs = require("fs");
-const fsPromises = require("fs").promises;
-const path = require("path");
+const logEvents = require("./logEvents");
+const EventEmitter = require("events");
 
-// fs.readFile("./files/first.txt", (err, data) => {
-//   if (err) {
-//     throw err;
-//   }
-//   console.log(data.toString());
-// });
+class MyEmitter extends EventEmitter {}
 
-const { format } = require("date-fns");
+// initialize object
+const myEmitter = new MyEmitter();
 
-const logEvents = async (message) => {
-  const datetime = `${format(new Date(), "yyyyMMdd\tHH:mm:ss.SSS")}`;
-  const logItem = ``;
-};
+myEmitter.on("log", (msg) => logEvents(msg));
+
+setTimeout(() => {
+  myEmitter.emit("log", "Log event emitted");
+}, 2000);
